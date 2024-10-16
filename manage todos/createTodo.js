@@ -6,8 +6,10 @@ router.post('/create', async (req, res) => {
     const createTodo = new Todo(req.body);
     try {
         const success = await Todo.create(createTodo)
+        const todos = await Todo.find()
+        console.log(todos)
         if (success) {
-            res.json({message:"Successfully Created"})
+            res.json({message:todos})
         }
     } catch (err) {
         console.log(err.message)

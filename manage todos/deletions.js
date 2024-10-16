@@ -7,8 +7,10 @@ router.delete('/delete/:id', async (req, res) => {
     const { id } = req.params
     try {
         const deletion = await Todo.deleteOne({ _id: new Types.ObjectId(id) })
+        const todoDatas = await Todo.find();
         if (deletion) {
-            res.json({message:"Successfully Deleted"})
+            res.json({ todos: todoDatas })
+            console.log(todoDatas)
         }
     } catch (err) {
         console.log(err.message)
