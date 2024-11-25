@@ -6,11 +6,10 @@ const {Types} = require('mongoose')
 router.delete('/delete/:id', async (req, res) => {
     const { id } = req.params
     try {
-        const deletion = await Todo.deleteOne({ _id: new Types.ObjectId(id) })
+        await Todo.deleteOne({_id:new Types.ObjectId(id)})
         const todoDatas = await Todo.find();
-        if (deletion) {
+        if (todoDatas) {
             res.json({ todos: todoDatas })
-            console.log(todoDatas)
         }
     } catch (err) {
         console.log(err.message)
@@ -24,7 +23,8 @@ router.put('/edit/:id', async (req, res) => {
     try {
         const update = await Todo.updateOne({ _id: new Types.ObjectId(id) }, { $set: req.body })
         if (update) {
-            res.json({message:"Updated Successfully"})
+            const todoDatas = await Todo.find();
+            res.json({todos:todoDatas})
         }
     } catch (err) {
         console.log(err.message)

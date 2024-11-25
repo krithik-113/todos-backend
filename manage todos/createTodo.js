@@ -5,11 +5,10 @@ const Todo = require('../database/model')
 router.post('/create', async (req, res) => {
     const createTodo = new Todo(req.body);
     try {
-        const success = await Todo.create(createTodo)
+        await Todo.create(createTodo)
         const todos = await Todo.find()
-        console.log(todos)
-        if (success) {
-            res.json({message:todos})
+        if (todos.length) {
+            res.json({todos})
         }
     } catch (err) {
         console.log(err.message)
